@@ -1,6 +1,7 @@
 import json
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from resume_parser import extract_text_from_pdf
 from analyzer import analyze_resume
@@ -18,8 +19,13 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    """Root endpoint to prevent 404 errors on the base URL."""
-    return {"message": "Welcome to the ResumeIQ API. Access /health for status or use /analyze to process resumes."}
+    """Serve the frontend website on the base URL."""
+    return FileResponse("index.html")
+
+@app.get("/logo.jpg")
+async def get_logo():
+    """Serve the logo image for the frontend."""
+    return FileResponse("logo.jpg")
 
 @app.get("/health")
 async def health_check():
