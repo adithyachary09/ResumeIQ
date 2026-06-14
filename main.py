@@ -16,6 +16,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    """Root endpoint to prevent 404 errors on the base URL."""
+    return {"message": "Welcome to the ResumeIQ API. Access /health for status or use /analyze to process resumes."}
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint for deployment status."""
